@@ -9,10 +9,12 @@ public class GameEngine {
     private InputHandler inputHandler;
     private ErrorHandler errorHandler;
     private CollisionConnector collisionConnector;
+    private InputConnector inputConnector;
 
     public void initializeGame() {
         // Initialize all game components
-        paddleController = new PaddleController();
+        inputConnector = new InputConnector(); // Create an instance of InputConnector
+        paddleController = new PaddleController(inputConnector,10,10); // Provide InputConnector to PaddleController
         collisionConnector = new CollisionConnector(brickManager);
         ballController = new BallController(collisionConnector);
         // ballController = new BallController();

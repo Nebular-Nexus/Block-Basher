@@ -1,30 +1,29 @@
 import java.awt.event.KeyEvent;
-
 public class InputHandler {
-    public void handleKeyTyped(KeyEvent e) {
-        // Handle key typed events
-        // Not handling key typed events in this scenario
-    }
+    private boolean leftKeyPressed;
+    private boolean rightKeyPressed;
 
-    public void handleKeyPressed(KeyEvent e, PaddleController paddleController, GameEngine gameEngine) {
-        int key = e.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_LEFT:
-                paddleController.moveLeft();
-                break;
-            case KeyEvent.VK_RIGHT:
-                paddleController.moveRight();
-                break;
-            case KeyEvent.VK_ENTER:
-                gameEngine.initializeGame();
-                gameEngine.start();
-                break;
-            // Add more cases for other keys if needed
+    public void handleKeyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftKeyPressed = true;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightKeyPressed = true;
         }
     }
 
     public void handleKeyReleased(KeyEvent e) {
-        // Handle key released events
-        // Not handling key released events in this scenario
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftKeyPressed = false;
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightKeyPressed = false;
+        }
+    }
+
+    public boolean isLeftKeyPressed() {
+        return leftKeyPressed;
+    }
+
+    public boolean isRightKeyPressed() {
+        return rightKeyPressed;
     }
 }
