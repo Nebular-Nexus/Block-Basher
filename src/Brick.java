@@ -1,9 +1,11 @@
+import java.awt.Color;
+
 public class Brick {
     private int durability;
-    private String color;
+    private Color color;
     private Double x; // X-coordinate position
     private Double y; // Y-coordinate position
-    public Brick(int durability, String color, Double x, Double y) {
+    public Brick(int durability, Color color, Double x, Double y) {
         this.durability = durability;
         this.color = color;
         this.x = x;
@@ -27,10 +29,10 @@ public class Brick {
     public void setDurability(int durability) {
         this.durability = durability;
     }
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 }

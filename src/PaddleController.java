@@ -5,18 +5,18 @@ public class PaddleController {
 
     public PaddleController(InputConnector inputConnector,int paddleWidth,int paddlePosition) {
         this.inputConnector = inputConnector;
-        this.paddleWidth = this.paddleWidth;
-        this.paddlePosition = this.paddlePosition;
+        this.paddleWidth = paddleWidth;
+        this.paddlePosition =paddlePosition;
     }
 
     public void moveLeft() {
         // Move paddle to the left
-        paddlePosition -= 5; // For example: Adjust the position by a fixed amount
+        this.paddlePosition -= 5; // For example: Adjust the position by a fixed amount
     }
 
     public void moveRight() {
         // Move paddle to the right
-        paddlePosition += 5; // For example: Adjust the position by a fixed amount
+        this.paddlePosition += 5; // For example: Adjust the position by a fixed amount
     }
 
     public void handleInput() {

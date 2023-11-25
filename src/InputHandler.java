@@ -2,7 +2,6 @@ import java.awt.event.KeyEvent;
 public class InputHandler {
     private boolean leftKeyPressed;
     private boolean rightKeyPressed;
-
     public void handleKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             leftKeyPressed = true;
