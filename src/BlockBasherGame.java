@@ -21,7 +21,7 @@ public class BlockBasherGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);;
-
+        
         JPanel gamePanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {

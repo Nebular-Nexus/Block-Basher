@@ -1,9 +1,9 @@
 public class DifficultyManager {
     private int ballSpeed;
     private int brickDurability;
+    // private int level;
 
     public void increaseDifficulty() {
-        // Increase game difficulty
     }
 
     public void decreaseDifficulty() {

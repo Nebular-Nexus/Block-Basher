@@ -1,24 +1,24 @@
 public class Brick {
     private int durability;
     private String color;
-    private int x; // X-coordinate position
-    private int y; // Y-coordinate position
-    public Brick(int durability, String color, int x, int y) {
+    private Double x; // X-coordinate position
+    private Double y; // Y-coordinate position
+    public Brick(int durability, String color, Double x, Double y) {
         this.durability = durability;
         this.color = color;
         this.x = x;
         this.y = y;
     }
-    public int getX() {
-        return x;
+    public Double getX() {
+        return this.x;
     }
-    public void setX(int x) {
+    public void setX(Double x) {
         this.x = x;
     }
-    public int getY() {
+    public Double getY() {
         return y;
     }
-    public void setY(int y) {
+    public void setY(Double y) {
         this.y = y;
     }
     public int getDurability() {
