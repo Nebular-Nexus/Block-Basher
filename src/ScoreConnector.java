@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+
 public class ScoreConnector {
     private ScoringSystem scoringSystem;
     
@@ -16,6 +18,10 @@ public class ScoreConnector {
     public int getScore()
     {
         return this.scoringSystem.getScore();
+    }
+
+    public void scoreDisplay(Graphics2D g){
+        this.scoringSystem.displayScore(g);
     }
 }
 

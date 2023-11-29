@@ -18,11 +18,22 @@ public class InputHandler {
         }
     }
 
-    public boolean isLeftKeyPressed() {
+    public boolean isLeftKeyPressed(KeyEvent e) {
+        handleKeyPressed(e);
         return leftKeyPressed;
     }
 
-    public boolean isRightKeyPressed() {
+    public boolean isRightKeyPressed(KeyEvent e) {
+        handleKeyPressed(e);
         return rightKeyPressed;
+    }
+
+    public String keyPressed(KeyEvent e){
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+           return "left";
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            return "right";
+        }
+        return "none";
     }
 }

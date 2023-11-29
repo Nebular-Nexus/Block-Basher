@@ -1,3 +1,7 @@
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class BallController {
     private int ballPositionX;
     private int ballPositionY;
@@ -20,6 +24,12 @@ public class BallController {
 
     public void move() {
         // Move the ball
+    }
+
+    public void ballDisplay(Graphics2D g)
+    {
+        g.setColor(Color.black);
+        g.fillOval(120, 350, 20, 20);
     }
 
     public int getBallPositionX() {
@@ -81,6 +91,6 @@ public class BallController {
     public void checkCollisions()
     {
         this.collisionConnector.checkCollisions(this);
-    }
+    }    
 }
 

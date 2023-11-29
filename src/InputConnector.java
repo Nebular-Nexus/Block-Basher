@@ -3,15 +3,19 @@ import java.awt.event.KeyEvent;
 public class InputConnector {
     private InputHandler inputHandler;
 
-    public void InputConnector(){
-        inputHandler = new InputHandler();
+    public InputConnector(InputHandler inputHandler){
+        this.inputHandler = inputHandler;
     }
 
-    public boolean isLeftKeyPressed() {
-        return inputHandler.isLeftKeyPressed();
+    public boolean isLeftKeyPressed(KeyEvent e) {
+        return inputHandler.isLeftKeyPressed(e);
     }
 
-    public boolean isRightKeyPressed() {
-        return inputHandler.isLeftKeyPressed();
+    public boolean isRightKeyPressed(KeyEvent e) {
+        return inputHandler.isLeftKeyPressed(e);
+    }
+
+    public String keyPressed(KeyEvent e){
+        return inputHandler.keyPressed(e);
     }
 }
