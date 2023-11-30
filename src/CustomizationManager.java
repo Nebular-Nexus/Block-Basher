@@ -1,18 +1,30 @@
+// CustomizationManager.java
 public class CustomizationManager {
     private String paddleDesign;
     private String ballColor;
     private String backgroundTheme;
-    
-    public void customizePaddle() {
-        // Customize paddle
+
+    public String getPaddleDesign() {
+        return paddleDesign;
     }
 
-    public void customizeBall() {
-        // Customize ball
+    public void setPaddleDesign(String paddleDesign) {
+        this.paddleDesign = paddleDesign;
     }
 
-    public void customizeBackground() {
-        // Customize background
+    public String getBallColor() {
+        return ballColor;
+    }
+
+    public void setBallColor(String ballColor) {
+        this.ballColor = ballColor;
+    }
+
+    public String getBackgroundTheme() {
+        return backgroundTheme;
+    }
+
+    public void setBackgroundTheme(String backgroundTheme) {
+        this.backgroundTheme = backgroundTheme;
     }
 }
-
