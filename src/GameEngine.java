@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,9 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private InputConnector inputConnector;
     private ScoreConnector scoreConnector;
 
-
+    private HashMap<Integer,Integer>difficulty_speed;
+    private HashMap<Integer,Integer>difficulty_paddle_length;
+    private HashMap<Integer,Integer>difficulty_paddle_speed;
     private int delay = 8;
     private Timer timer;
     private int ballposX=120;
@@ -29,13 +32,20 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private int ballYdir=-2;
     private boolean play = false;
 
-    public GameEngine(){
+    public GameEngine(DifficultyManager difficultyManager,CustomizationManager customizationManager){
+        this.difficultyManager = difficultyManager;
+        this.customizationManager =customizationManager;
+        this.difficulty_speed = new HashMap<>();
+        this.difficulty_paddle_length = new HashMap<>();
+        this.difficulty_paddle_speed = new HashMap<>();
         this.initializeGame();
         addKeyListener(this);
         setFocusable(true);
+        setBackground(customizationManager.getBackgroundTheme());
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start();
+        
     }
 
     @Override
@@ -46,29 +56,41 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
 
         this.ui.paddleDisplay(this.paddleController,g2d);
         this.ui.ballDisplay(this.ballController, g2d);
+        
         this.ui.scoreDisplay(this.scoreConnector, g2d);
         this.ui.drawBricks(this.brickManager,g2d);
     }
 
     public void initializeGame() {
     
+
+        this.difficulty_speed.put(1,2);
+        this.difficulty_speed.put(2,3);
+        this.difficulty_speed.put(3,4);
+        this.difficulty_paddle_length.put(1,200);
+        this.difficulty_paddle_length.put(2,150);
+        this.difficulty_paddle_length.put(3,125);
+        this.difficulty_paddle_speed.put(1,10);
+        this.difficulty_paddle_speed.put(2,20);
+        this.difficulty_paddle_speed.put(3,30);
         this.brickManager = new BrickManager(4,10);
         this.scoringSystem = new ScoringSystem(0);
         this.scoreConnector = new ScoreConnector(this.scoringSystem);
-        this.customizationManager = new CustomizationManager();
+        // this.customizationManager = new CustomizationManager();
        
         this.ui = new UserInterface();
 
-
+        
         // this.collisionConnector = new CollisionConnector(this.brickManager,this.scoreConnector);
         this.collisionConnector = new CollisionConnector();
-        this.ballController = new BallController(ballposX,ballposY,1,ballXdir,ballYdir,this.collisionConnector);
+        
+        this.ballController = new BallController(ballposX,ballposY,this.difficulty_speed.get(this.difficultyManager.getLevel()),ballXdir,ballYdir,this.collisionConnector,this.customizationManager.getBallColor());
 
 
         this.inputHandler = new InputHandler();
         this.inputConnector = new InputConnector(this.inputHandler);
 
-        this.paddleController = new PaddleController(this.inputConnector,100,310);
+        this.paddleController = new PaddleController(this.inputConnector,this.difficulty_paddle_length.get(this.difficultyManager.getLevel()),310,this.difficulty_paddle_speed.get(this.difficultyManager.getLevel()));
 
 
         this.errorHandler = new ErrorHandler();

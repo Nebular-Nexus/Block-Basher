@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 
 public class PaddleController {
     private int paddlePosition;
-
+    private int paddleSpeed;
     private int paddleWidth;
     private InputConnector inputConnector;
 
@@ -12,23 +12,24 @@ public class PaddleController {
         return paddlePosition;
     }
 
-    public PaddleController(InputConnector inputConnector,int paddleWidth,int paddlePosition) {
+    public PaddleController(InputConnector inputConnector,int paddleWidth,int paddlePosition,int paddleSpeed) {
         this.inputConnector = inputConnector;
         this.paddleWidth = paddleWidth;
         this.paddlePosition =paddlePosition;
+        this.paddleSpeed = paddleSpeed;
     }
 
     public void moveLeft() {
         // Move paddle to the left
         if(this.paddlePosition>0){
-            this.paddlePosition -= 10;
+            this.paddlePosition -= this.paddleSpeed;
         }
     }
 
     public void moveRight() {
         // Move paddle to the right
         if(this.paddlePosition<600){
-            this.paddlePosition += 10;
+            this.paddlePosition += this.paddleSpeed;
         }
     }
 

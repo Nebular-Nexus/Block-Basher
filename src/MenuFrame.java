@@ -34,7 +34,7 @@ public class MenuFrame extends JFrame {
     private JPanel createMenuPanel() {
         JButton startButton = new JButton("Start Game");
         startButton.addActionListener(e -> {
-            GameFrame gameFrame = new GameFrame();
+            GameFrame gameFrame = new GameFrame(this.difficultyManager,this.customizationManager);
             gameFrame.setVisible(true);
             System.out.println("Game started!");
             printSettings();
@@ -51,7 +51,7 @@ public class MenuFrame extends JFrame {
 
     private void printSettings() {
         System.out.println("Ball Color: " + customizationManager.getBallColor());
-        System.out.println("Paddle Design: " + customizationManager.getPaddleDesign());
+        // System.out.println("Paddle Design: " + customizationManager.getPaddleDesign());
         System.out.println("Background Theme: " + customizationManager.getBackgroundTheme());
         System.out.println("Difficulty Level: " + difficultyManager.getLevel());
 

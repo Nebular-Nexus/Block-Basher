@@ -22,13 +22,13 @@ public class SettingsPanel extends JPanel {
         labelTextFieldMap = new HashMap<>();
 
         // Ball Color
-        addLabelAndTextField("Ball Color:", customizationManager.getBallColor(), gbc);
+        addLabelAndTextField("Ball Color:", "BLACK", gbc);
 
         // Paddle Design
-        addLabelAndTextField("Paddle Design:", customizationManager.getPaddleDesign(), gbc);
+        // addLabelAndTextField("Paddle Design:", customizationManager.getPaddleDesign(), gbc);
 
         // Background Theme
-        addLabelAndTextField("Background Theme:", customizationManager.getBackgroundTheme(), gbc);
+        addLabelAndTextField("Background Theme:","WHITE", gbc);
 
         // Difficulty Level
         addLabelAndTextField("Difficulty Level:", String.valueOf(difficultyManager.getLevel()), gbc);
@@ -63,10 +63,15 @@ public class SettingsPanel extends JPanel {
     }
 
     private void saveSettings() {
-        customizationManager.setBallColor(getText(labelTextFieldMap.get(getLabel("Ball Color:"))));
-        customizationManager.setPaddleDesign(getText(labelTextFieldMap.get(getLabel("Paddle Design:"))));
-        customizationManager.setBackgroundTheme(getText(labelTextFieldMap.get(getLabel("Background Theme:"))));
 
+        String ballColorInput = getText(labelTextFieldMap.get(getLabel("Ball Color:")));
+        Color ballColor = parseColor(ballColorInput);
+        customizationManager.setBallColor(ballColor);
+        String backgroundColorInput =getText(labelTextFieldMap.get(getLabel("Background Theme:")));
+        Color backGroundColor = parseColor(backgroundColorInput);
+        // customizationManager.setPaddleDesign(getText(labelTextFieldMap.get(getLabel("Paddle Design:"))));
+        customizationManager.setBackgroundTheme(backGroundColor);
+        System.out.println(getText(labelTextFieldMap.get(getLabel("Ball Color:"))));
         try {
             int level = Integer.parseInt(getText(labelTextFieldMap.get(getLabel("Difficulty Level:"))));
             difficultyManager.setLevel(level);
@@ -88,4 +93,22 @@ public class SettingsPanel extends JPanel {
     private String getText(JTextField textField) {
         return textField != null ? textField.getText() : "";
     }
+
+    private Color parseColor(String colorInput) {
+        try {
+            // Try to create a Color object using the Color class constants
+            return (Color) Color.class.getField(colorInput.toUpperCase()).get(null);
+        } catch (Exception e) {
+            try {
+                // If it's not a constant, try to decode it as a hex color
+                return Color.decode(colorInput);
+            } catch (NumberFormatException ex) {
+                // Handle invalid color input
+                System.out.println("Invalid color input: " + colorInput);
+                return Color.BLACK; // or any default color
+            }
+        }
+    }
+
+
 }

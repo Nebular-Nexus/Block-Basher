@@ -7,18 +7,21 @@ public class BallController {
     private int ballPositionY;
     private int ballSpeed;
 
-    private int ballDirX;
+    private int ballDirX;   
     private int ballDirY;
     private CollisionConnector collisionConnector;
+    private Color color;
+
 
     public BallController(int ballPositionX, int ballPositionY, int ballSpeed, int ballDirX,
-            int ballDirY, CollisionConnector collisionConnector) {
+            int ballDirY, CollisionConnector collisionConnector,Color color) {
         this.ballPositionX = ballPositionX;
         this.ballPositionY = ballPositionY;
         this.ballSpeed = ballSpeed;
         this.ballDirX = ballDirX;
         this.ballDirY = ballDirY;
         this.collisionConnector = collisionConnector;
+        this.color = color;
     }
 
     public void move(BrickManager brickManager,PaddleController paddleController,ScoreConnector scoreConnector) {
@@ -54,7 +57,7 @@ public class BallController {
 
     public void ballDisplay(Graphics2D g)
     {
-        g.setColor(Color.black);
+        g.setColor(color);
         g.fillOval(this.ballPositionX, this.ballPositionY, 20, 20);
     }
 

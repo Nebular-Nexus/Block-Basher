@@ -1,8 +1,11 @@
 // CustomizationManager.java
+
+import java.awt.Color;
+
 public class CustomizationManager {
     private String paddleDesign;
-    private String ballColor;
-    private String backgroundTheme;
+    private Color ballColor;
+    private Color backgroundTheme;
 
     public String getPaddleDesign() {
         return paddleDesign;
@@ -12,19 +15,19 @@ public class CustomizationManager {
         this.paddleDesign = paddleDesign;
     }
 
-    public String getBallColor() {
+    public Color getBallColor() {
         return ballColor;
     }
 
-    public void setBallColor(String ballColor) {
+    public void setBallColor(Color ballColor) {
         this.ballColor = ballColor;
     }
 
-    public String getBackgroundTheme() {
+    public Color getBackgroundTheme() {
         return backgroundTheme;
     }
 
-    public void setBackgroundTheme(String backgroundTheme) {
+    public void setBackgroundTheme(Color backgroundTheme) {
         this.backgroundTheme = backgroundTheme;
     }
 }
