@@ -26,12 +26,13 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private HashMap<Integer,Integer>difficulty_paddle_speed;
     private int delay = 8;
     private Timer timer;
-    private int ballposX=120;
-    private int ballposY=350;
-    private int ballXdir=-1;
-    private int ballYdir=-2;
+    private int ballposX=350;
+    private int ballposY=500;
+    private int ballXdir=1;
+    private int ballYdir=2;
     private boolean play = false;
     private boolean victory = false;
+    private boolean defeat = false;
     private Timer victoryDelayTimer;
 
     public GameEngine(DifficultyManager difficultyManager,CustomizationManager customizationManager){
@@ -50,10 +51,14 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         victoryDelayTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showVictoryMessage();
+                if(victory)
+                    showVictoryMessage();
+                if(defeat)
+                    showDefeatMessage();
                 victoryDelayTimer.stop();
             }
         });
+       
     }
 
     @Override
@@ -72,10 +77,10 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,10);
+        this.difficulty_speed.put(1,1);
         this.difficulty_speed.put(2,3);
         this.difficulty_speed.put(3,4);
-        this.difficulty_paddle_length.put(1,2000);
+        this.difficulty_paddle_length.put(1,200);
         this.difficulty_paddle_length.put(2,150);
         this.difficulty_paddle_length.put(3,125);
         this.difficulty_paddle_speed.put(1,10);
@@ -107,12 +112,14 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
-        if (play && !victory) {
+        if (play && !victory && !defeat) {
             this.ballController.move(this.brickManager, this.paddleController, this.scoreConnector);
             checkVictory();
+            checkDefeat();
         }
         repaint();
     }
+    
     private void checkVictory() {
             if (brickManager.allBricksHit() && !victory) {
                 play = false;
@@ -120,10 +127,21 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
                 victory = true;
             }
         }
-        private void showVictoryMessage() {
-            JOptionPane.showMessageDialog(this, "Victory! You've cleared all the bricks.", "Victory", JOptionPane.INFORMATION_MESSAGE);
-            // Additional logic if you want to start a new game or do something else
+    private void showVictoryMessage() {
+        JOptionPane.showMessageDialog(this, "Victory! You've cleared all the bricks.", "Victory", JOptionPane.INFORMATION_MESSAGE);
+        // Additional logic if you want to start a new game or do something else
+    }
+    private void checkDefeat() {
+            if (ballController.GameOver()==1 && !victory) {
+                play = false;
+                victoryDelayTimer.start();
+                defeat = true;
+            }
         }
+    private void showDefeatMessage() {
+        JOptionPane.showMessageDialog(this, "Defeat! Try Again.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
+        // Additional logic if you want to start a new game or do something else
+    }
 
 
     @Override
@@ -164,4 +182,3 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         //     });
         // }
 }
-

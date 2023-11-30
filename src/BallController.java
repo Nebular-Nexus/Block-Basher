@@ -1,6 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.Graphics;
+
 
 public class BallController {
     private int ballPositionX;
@@ -11,6 +11,7 @@ public class BallController {
     private int ballDirY;
     private CollisionConnector collisionConnector;
     private Color color;
+    private int gameover=0;
 
 
     public BallController(int ballPositionX, int ballPositionY, int ballSpeed, int ballDirX,
@@ -31,7 +32,7 @@ public class BallController {
         this.setBallPositionX(this.getBallPositionX()+this.getBallSpeed()*this.getBallDirX());
         this.setBallPositionY(this.getBallPositionY()+this.getBallSpeed()*this.getBallDirY());
         
-        System.out.println(this.getBallPositionX());
+        // System.out.println(this.getBallPositionX());
 
         //checks if the ball hits the side walls
         if (this.getBallPositionX() < 0) {
@@ -44,10 +45,18 @@ public class BallController {
         //checks if the ball hits the upper wall
         if (this.getBallPositionY() < 0) {
             this.setBallDirY(-1*this.getBallDirY());
-        } 
+        }
+        
+        if(this.getBallPositionY()>570)
+        {
+            gameover=1;
+        }
         // Move the ball
     }
-
+    public int GameOver()
+    {
+        return gameover;
+    }
     public int getBallSpeed() {
         return this.ballSpeed;
     }

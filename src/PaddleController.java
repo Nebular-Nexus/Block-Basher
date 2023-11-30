@@ -54,8 +54,8 @@ public class PaddleController {
 
     public void paddleDisplay(Graphics2D g)
     {
-        System.out.println(this.paddlePosition);
-        System.out.println(this.paddleWidth);
+        // System.out.println(this.paddlePosition);
+        // System.out.println(this.paddleWidth);
         g.setColor(Color.black);
         g.fillRect(this.paddlePosition, 550, this.paddleWidth, 8);
     }

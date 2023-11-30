@@ -34,7 +34,7 @@ public class CollisionConnector {
                     Rectangle brickrect = rect;
 
                     if (ballrect.intersects(brickrect)) {
-                        bricks[i][j].setDurability(bricks[i][j].getDurability()-1);
+                        bricks[i][j].updateBrick(bricks[i][j].getDurability()-1);
                         scoreConnector.updateScore(1);
                         if (ballController.getBallPositionX() + 19 <= brickrect.x || ballController.getBallPositionX() + 1 >= brickrect.x + bricksWidth) {
                             ballController.setBallDirX(ballController.getBallDirX()*-1); 
