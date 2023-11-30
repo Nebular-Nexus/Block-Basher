@@ -27,6 +27,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private int ballposY=350;
     private int ballXdir=-1;
     private int ballYdir=-2;
+    private boolean play = true;
 
     public GameEngine(){
         this.initializeGame();
@@ -38,10 +39,16 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     }
 
     public void paint(Graphics g){
-        this.brickManager.drawBricks((Graphics2D) g);
-        this.ballController.ballDisplay((Graphics2D) g);
+        super.paint(g); // Ensure the panel is properly painted
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        
+        this.paddleController.paddleDisplay(g2d);
+        this.brickManager.drawBricks(g2d);
+        this.ballController.ballDisplay(g2d);
         this.paddleController.paddleDisplay((Graphics2D) g);
-        this.scoreConnector.scoreDisplay((Graphics2D) g);
+        this.scoreConnector.scoreDisplay(g2d);
     }
 
     public void initializeGame() {
@@ -65,7 +72,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         this.inputHandler = new InputHandler();
         this.inputConnector = new InputConnector(this.inputHandler);
 
-        this.paddleController = new PaddleController(this.inputConnector,10,310);
+        this.paddleController = new PaddleController(this.inputConnector,100,310);
 
 
         this.errorHandler = new ErrorHandler();
@@ -84,56 +91,62 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Timer.start();
+        timer.start();
 
-        // if (play) {
-        //     if (new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))) {
-        //         ballYdir = -ballYdir;
-        //     }
+        if (play) {
+            if (new Rectangle(this.ballController.getBallPositionX(), this.ballController.getBallPositionY(), 20, 20).intersects(new Rectangle(this.paddleController.getPaddlePosition(), 550, 100, 8))) {
+                this.ballController.setBallDirY(-1*this.ballController.getBallDirY());;
+            }
 
-        //     A:
-        //     for (int i = 0; i < map.map.length; i++) {
-        //         for (int j = 0; j < map.map[0].length; j++) {
-        //             if (map.map[i][j] > 0) {
-        //                 int brickX = j * map.bricksWidth + 80;
-        //                 int brickY = i * map.bricksHeight + 50;
-        //                 int bricksWidth = map.bricksWidth;
-        //                 int bricksHeight = map.bricksHeight;
+            Brick bricks[][] = this.brickManager.getBricks();
+        A:
+        for (int i = 0; i < this.brickManager.getBricks().length; i++) {
+            for (int j = 0; j < this.brickManager.getBricks()[0].length; j++) {
+                if (bricks[i][j].getDurability()> 0) {
+                    int brickX = j * bricks[i][j].getX().intValue()+ 80;
+                    int brickY = i * bricks[i][j].getY().intValue() + 50;
+                    int bricksWidth = bricks[i][j].getX().intValue();
+                    int bricksHeight = bricks[i][j].getY().intValue();
 
-        //                 Rectangle rect = new Rectangle(brickX, brickY, bricksWidth, bricksHeight);
-        //                 Rectangle ballrect = new Rectangle(ballposX, ballposY, 20, 20);
-        //                 Rectangle brickrect = rect;
+                    Rectangle rect = new Rectangle(brickX, brickY, bricksWidth, bricksHeight);
+                    Rectangle ballrect = new Rectangle(ballController.getBallPositionX(),ballController.getBallPositionY(), 20, 20);
+                    Rectangle brickrect = rect;
 
-        //                 if (ballrect.intersects(brickrect)) {
-        //                     map.setBricksValue(0, i, j);
-        //                     totalbricks--;
-        //                     score += 5;
-        //                     if (ballposX + 19 <= brickrect.x || ballposX + 1 >= brickrect.x + bricksWidth) {
-        //                         ballXdir = -ballXdir;
-        //                     } else {
-        //                         ballYdir = -ballYdir;
-        //                     }
-        //                     break A;
-        //                 }
-        //             }
-
-
-        //         }
-        //     }
+                    if (ballrect.intersects(brickrect)) {
+                        bricks[i][j].setDurability(bricks[i][j].getDurability()-1);
+                        this.scoreConnector.updateScore(1);
+                        if (ballController.getBallPositionX() + 19 <= brickrect.x || ballController.getBallPositionX() + 1 >= brickrect.x + bricksWidth) {
+                            ballController.setBallDirX(ballController.getBallDirX()*-1); 
+                        } else {
+                            ballController.setBallDirY(ballController.getBallDirY()*-1);;
+                        }
+                        break A;
+                    }
+                }
 
 
-        //     ballposX += ballXdir;
-        //     ballposY += ballYdir;
-        //     if (ballposX < 0) {
-        //         ballXdir = -ballXdir;
-        //     }
-        //     if (ballposY < 0) {
-        //         ballYdir = -ballYdir;
-        //     }
-        //     if (ballposX > 670) {
-        //         ballXdir = -ballXdir;
-        //     }
-        // }
+            }
+        }
+
+
+            this.ballController.setBallPositionX(this.ballController.getBallPositionX()+this.ballController.getBallDirX());
+            this.ballController.setBallPositionY(this.ballController.getBallPositionY() + this.ballController.getBallDirY());
+            
+            System.out.println(this.ballController.getBallPositionX());
+
+            //checks if the ball hits the side walls
+            if (this.ballController.getBallPositionX() < 0) {
+                this.ballController.setBallDirX(-1*this.ballController.getBallDirX());
+            }
+            if (this.ballController.getBallPositionX() > 670) {
+                this.ballController.setBallDirX(-1*this.ballController.getBallDirX());
+            }
+
+            //checks if the ball hits the upper wall
+            if (this.ballController.getBallPositionY() < 0) {
+                this.ballController.setBallDirY(-1*this.ballController.getBallDirY());
+            }
+        }
         repaint();
     }
 
@@ -152,24 +165,13 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("press");
+        // System.out.println("press");
+        if(this.inputConnector.keyPressed(e).equals("enter")){
+            if(!play){
+                play=true;
+            }  
+        }
         this.paddleController.handleInput(e);
-        // System.out.println(this.paddleController.position);
-        // this.paddleController.move();
-        // if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-        //     if (playerX >= 600) {
-        //         playerX = 600;
-        //     } else {
-        //         moveRight();
-        //     }
-        // }
-        // if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-        //     if (playerX < 10) {
-        //         playerX = 10;
-        //     } else {
-        //         moveLeft();
-        //     }
-        // }
 
         // if (e.getKeyCode() == KeyEvent.VK_ENTER) {
         //     if (!play) {

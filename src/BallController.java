@@ -29,7 +29,7 @@ public class BallController {
     public void ballDisplay(Graphics2D g)
     {
         g.setColor(Color.black);
-        g.fillOval(120, 350, 20, 20);
+        g.fillOval(this.ballPositionX, this.ballPositionY, 20, 20);
     }
 
     public int getBallPositionX() {

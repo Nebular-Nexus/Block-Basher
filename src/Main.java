@@ -9,6 +9,7 @@ public class Main {
         obj.setTitle("Breakout Ball");
         obj.setResizable(true);
         obj.setVisible(true);
+        obj.setLocationRelativeTo(null);
         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         obj.add(gameEngine);
     }

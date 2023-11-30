@@ -38,7 +38,6 @@ public class CollisionConnector {
 
             }
         }
-        // brickManager.updateBrickDurability(ballController);
     }
     
 

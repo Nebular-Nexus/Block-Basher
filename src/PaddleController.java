@@ -1,12 +1,16 @@
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 public class PaddleController {
     private int paddlePosition;
+
     private int paddleWidth;
     private InputConnector inputConnector;
+
+    public int getPaddlePosition() {
+        return paddlePosition;
+    }
 
     public PaddleController(InputConnector inputConnector,int paddleWidth,int paddlePosition) {
         this.inputConnector = inputConnector;
@@ -16,12 +20,16 @@ public class PaddleController {
 
     public void moveLeft() {
         // Move paddle to the left
-        this.paddlePosition -= 5; // For example: Adjust the position by a fixed amount
+        if(this.paddlePosition>0){
+            this.paddlePosition -= 5;
+        }
     }
 
     public void moveRight() {
         // Move paddle to the right
-        this.paddlePosition += 5; // For example: Adjust the position by a fixed amount
+        if(this.paddlePosition<600){
+            this.paddlePosition += 5;
+        }
     }
 
     public void handleInput(KeyEvent e) {
@@ -42,9 +50,9 @@ public class PaddleController {
 
     public void paddleDisplay(Graphics2D g)
     {
+        System.out.println(this.paddlePosition);
+        System.out.println(this.paddleWidth);
         g.setColor(Color.black);
-        g.fillRect(this.paddlePosition, 550, 100, 8);
+        g.fillRect(this.paddlePosition, 550, this.paddleWidth, 8);
     }
-
-
 }
