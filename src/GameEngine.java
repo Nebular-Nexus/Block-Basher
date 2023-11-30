@@ -31,6 +31,8 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private int ballXdir=-1;
     private int ballYdir=-2;
     private boolean play = false;
+    private boolean victory = false;
+    private Timer victoryDelayTimer;
 
     public GameEngine(DifficultyManager difficultyManager,CustomizationManager customizationManager){
         this.difficultyManager = difficultyManager;
@@ -45,7 +47,13 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
         timer.start();
-        
+        victoryDelayTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showVictoryMessage();
+                victoryDelayTimer.stop();
+            }
+        });
     }
 
     @Override
@@ -64,10 +72,10 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,2);
+        this.difficulty_speed.put(1,10);
         this.difficulty_speed.put(2,3);
         this.difficulty_speed.put(3,4);
-        this.difficulty_paddle_length.put(1,200);
+        this.difficulty_paddle_length.put(1,2000);
         this.difficulty_paddle_length.put(2,150);
         this.difficulty_paddle_length.put(3,125);
         this.difficulty_paddle_speed.put(1,10);
@@ -99,11 +107,23 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
-        if(play){
+        if (play && !victory) {
             this.ballController.move(this.brickManager, this.paddleController, this.scoreConnector);
+            checkVictory();
         }
         repaint();
     }
+    private void checkVictory() {
+            if (brickManager.allBricksHit() && !victory) {
+                play = false;
+                victoryDelayTimer.start();
+                victory = true;
+            }
+        }
+        private void showVictoryMessage() {
+            JOptionPane.showMessageDialog(this, "Victory! You've cleared all the bricks.", "Victory", JOptionPane.INFORMATION_MESSAGE);
+            // Additional logic if you want to start a new game or do something else
+        }
 
 
     @Override
