@@ -43,7 +43,8 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
 
         Graphics2D g2d = (Graphics2D) g;
 
-        
+        // g.setColor(Color.black);
+        // g.fillRect(1, 1, 692, 592);
         this.paddleController.paddleDisplay(g2d);
         this.brickManager.drawBricks(g2d);
         this.ballController.ballDisplay(g2d);
@@ -65,8 +66,9 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         this.ui = new UserInterface();
 
 
-        this.collisionConnector = new CollisionConnector(this.brickManager,this.scoreConnector);
-        this.ballController = new BallController(ballposX,ballposY,0,0,ballXdir,ballYdir,this.collisionConnector);
+        // this.collisionConnector = new CollisionConnector(this.brickManager,this.scoreConnector);
+        this.collisionConnector = new CollisionConnector();
+        this.ballController = new BallController(ballposX,ballposY,1,ballXdir,ballYdir,this.collisionConnector);
 
 
         this.inputHandler = new InputHandler();
@@ -78,74 +80,11 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         this.errorHandler = new ErrorHandler();
     }
 
-    public void updateGame() {
-        // Perform game updates
-        ballController.move();
-        ballController.checkCollisions();
-        // Other game updates
-    }
-
-    public void start() {
-        // Start the game loop
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         timer.start();
-
-        if (play) {
-            if (new Rectangle(this.ballController.getBallPositionX(), this.ballController.getBallPositionY(), 20, 20).intersects(new Rectangle(this.paddleController.getPaddlePosition(), 550, 100, 8))) {
-                this.ballController.setBallDirY(-1*this.ballController.getBallDirY());;
-            }
-
-            Brick bricks[][] = this.brickManager.getBricks();
-        A:
-        for (int i = 0; i < this.brickManager.getBricks().length; i++) {
-            for (int j = 0; j < this.brickManager.getBricks()[0].length; j++) {
-                if (bricks[i][j].getDurability()> 0) {
-                    int brickX = j * bricks[i][j].getX().intValue()+ 80;
-                    int brickY = i * bricks[i][j].getY().intValue() + 50;
-                    int bricksWidth = bricks[i][j].getX().intValue();
-                    int bricksHeight = bricks[i][j].getY().intValue();
-
-                    Rectangle rect = new Rectangle(brickX, brickY, bricksWidth, bricksHeight);
-                    Rectangle ballrect = new Rectangle(ballController.getBallPositionX(),ballController.getBallPositionY(), 20, 20);
-                    Rectangle brickrect = rect;
-
-                    if (ballrect.intersects(brickrect)) {
-                        bricks[i][j].setDurability(bricks[i][j].getDurability()-1);
-                        this.scoreConnector.updateScore(1);
-                        if (ballController.getBallPositionX() + 19 <= brickrect.x || ballController.getBallPositionX() + 1 >= brickrect.x + bricksWidth) {
-                            ballController.setBallDirX(ballController.getBallDirX()*-1); 
-                        } else {
-                            ballController.setBallDirY(ballController.getBallDirY()*-1);;
-                        }
-                        break A;
-                    }
-                }
-
-
-            }
-        }
-
-
-            this.ballController.setBallPositionX(this.ballController.getBallPositionX()+this.ballController.getBallDirX());
-            this.ballController.setBallPositionY(this.ballController.getBallPositionY() + this.ballController.getBallDirY());
-            
-            System.out.println(this.ballController.getBallPositionX());
-
-            //checks if the ball hits the side walls
-            if (this.ballController.getBallPositionX() < 0) {
-                this.ballController.setBallDirX(-1*this.ballController.getBallDirX());
-            }
-            if (this.ballController.getBallPositionX() > 670) {
-                this.ballController.setBallDirX(-1*this.ballController.getBallDirX());
-            }
-
-            //checks if the ball hits the upper wall
-            if (this.ballController.getBallPositionY() < 0) {
-                this.ballController.setBallDirY(-1*this.ballController.getBallDirY());
-            }
+        if(play){
+            this.ballController.move(this.brickManager, this.paddleController, this.scoreConnector);
         }
         repaint();
     }
@@ -172,20 +111,6 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
             }  
         }
         this.paddleController.handleInput(e);
-
-        // if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-        //     if (!play) {
-        //         ballposX = 120;
-        //         ballposY = 350;
-        //         ballXdir = -1;
-        //         ballYdir = -2;
-        //         score = 0;
-        //         playerX = 310;
-        //         totalbricks = 21;
-        //         map = new MapGenerator(3, 7);
-
-        //         repaint();
-        //     }
         }
 
     // @Override

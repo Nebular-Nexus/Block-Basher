@@ -5,25 +5,51 @@ import java.awt.Graphics;
 public class BallController {
     private int ballPositionX;
     private int ballPositionY;
-    private int ballSpeedX;
-    private int ballSpeedY;
+    private int ballSpeed;
+
     private int ballDirX;
     private int ballDirY;
     private CollisionConnector collisionConnector;
 
-    public BallController(int ballPositionX, int ballPositionY, int ballSpeedX, int ballSpeedY, int ballDirX,
+    public BallController(int ballPositionX, int ballPositionY, int ballSpeed, int ballDirX,
             int ballDirY, CollisionConnector collisionConnector) {
         this.ballPositionX = ballPositionX;
         this.ballPositionY = ballPositionY;
-        this.ballSpeedX = ballSpeedX;
-        this.ballSpeedY = ballSpeedY;
+        this.ballSpeed = ballSpeed;
         this.ballDirX = ballDirX;
         this.ballDirY = ballDirY;
         this.collisionConnector = collisionConnector;
     }
 
-    public void move() {
+    public void move(BrickManager brickManager,PaddleController paddleController,ScoreConnector scoreConnector) {
+
+        this.collisionConnector.checkCollisions(this, brickManager, paddleController, scoreConnector);
+
+        this.setBallPositionX(this.getBallPositionX()+this.getBallSpeed()*this.getBallDirX());
+        this.setBallPositionY(this.getBallPositionY()+this.getBallSpeed()*this.getBallDirY());
+        
+        System.out.println(this.getBallPositionX());
+
+        //checks if the ball hits the side walls
+        if (this.getBallPositionX() < 0) {
+            this.setBallDirX(-1*this.getBallDirX());
+        }
+        if (this.getBallPositionX() > 670) {
+            this.setBallDirX(-1*this.getBallDirX());
+        }
+
+        //checks if the ball hits the upper wall
+        if (this.getBallPositionY() < 0) {
+            this.setBallDirY(-1*this.getBallDirY());
+        } 
         // Move the ball
+    }
+
+    public int getBallSpeed() {
+        return this.ballSpeed;
+    }
+    public void setBallSpeed(int ballSpeed) {
+        this.ballSpeed = ballSpeed;
     }
 
     public void ballDisplay(Graphics2D g)
@@ -48,21 +74,7 @@ public class BallController {
         this.ballPositionY = ballPositionY;
     }
 
-    public int getBallSpeedX() {
-        return this.ballSpeedX;
-    }
-
-    public void setBallSpeedX(int ballSpeedX) {
-        this.ballSpeedX = ballSpeedX;
-    }
-
-    public int getBallSpeedY() {
-        return this.ballSpeedY;
-    }
-
-    public void setBallSpeedY(int ballSpeedY) {
-        this.ballSpeedY = ballSpeedY;
-    }
+    
 
     public int getBallDirX() {
         return this.ballDirX;
@@ -86,11 +98,6 @@ public class BallController {
 
     public void setCollisionConnector(CollisionConnector collisionConnector) {
         this.collisionConnector = collisionConnector;
-    }
-    
-    public void checkCollisions()
-    {
-        this.collisionConnector.checkCollisions(this);
-    }    
+    }  
 }
 

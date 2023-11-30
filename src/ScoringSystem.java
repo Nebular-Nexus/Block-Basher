@@ -20,7 +20,7 @@ public class ScoringSystem {
 
     public void displayScore(Graphics2D g)
     {
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.setFont(new Font("serif", Font.BOLD, 25));
         g.drawString("" + score, 590, 30);
     }
