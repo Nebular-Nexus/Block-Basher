@@ -1,29 +1,42 @@
-// SettingsPanel.java
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsPanel extends JPanel {
     private CustomizationManager customizationManager;
     private DifficultyManager difficultyManager;
 
-    public SettingsPanel(CustomizationManager customizationManager,DifficultyManager difficultyManager, MenuFrame menuFrame) {
+    private Map<JLabel, JTextField> labelTextFieldMap;
+
+    public SettingsPanel(CustomizationManager customizationManager, DifficultyManager difficultyManager, MenuFrame menuFrame) {
         this.customizationManager = customizationManager;
         this.difficultyManager = difficultyManager;
 
-        JLabel ballColorLabel = new JLabel("Ball Color:");
-        JTextField ballColorTextField = new JTextField(10);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        JLabel paddleDesignLabel = new JLabel("Paddle Design:");
-        JTextField paddleDesignTextField = new JTextField(10);
+        labelTextFieldMap = new HashMap<>();
 
-        JLabel backgroundThemeLabel = new JLabel("Background Theme:");
-        JTextField backgroundThemeTextField = new JTextField(10);
+        // Ball Color
+        addLabelAndTextField("Ball Color:", customizationManager.getBallColor(), gbc);
 
-        JLabel difficultyLevelLabel = new JLabel("Difficulty Level:");
-        JTextField difficultyLevelTextField = new JTextField(10);
-        
+        // Paddle Design
+        addLabelAndTextField("Paddle Design:", customizationManager.getPaddleDesign(), gbc);
+
+        // Background Theme
+        addLabelAndTextField("Background Theme:", customizationManager.getBackgroundTheme(), gbc);
+
+        // Difficulty Level
+        addLabelAndTextField("Difficulty Level:", String.valueOf(difficultyManager.getLevel()), gbc);
+
+        // Save Button
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -32,37 +45,47 @@ public class SettingsPanel extends JPanel {
                 menuFrame.showMenu();  // Show the menu after saving settings
             }
         });
+        add(saveButton, gbc);
+    }
 
-        setLayout(new GridLayout(4, 2));
-        add(ballColorLabel);
-        add(ballColorTextField);
-        add(paddleDesignLabel);
-        add(paddleDesignTextField);
-        add(backgroundThemeLabel);
-        add(backgroundThemeTextField);
-        add(difficultyLevelLabel);
-        add(difficultyLevelTextField);
-        add(saveButton);
+    private void addLabelAndTextField(String labelText, String defaultValue, GridBagConstraints gbc) {
+        JLabel label = new JLabel(labelText);
+        JTextField textField = new JTextField(defaultValue, 10);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        add(label, gbc);
+
+        gbc.gridx = 1;
+        add(textField, gbc);
+
+        labelTextFieldMap.put(label, textField);
     }
 
     private void saveSettings() {
-        customizationManager.setBallColor(getText("Ball Color:"));
-        customizationManager.setPaddleDesign(getText("Paddle Design:"));
-        customizationManager.setBackgroundTheme(getText("Background Theme:"));
-        difficultyManager.setLevel(Integer.parseInt(getText("Difficulty Level:")));
+        customizationManager.setBallColor(getText(labelTextFieldMap.get(getLabel("Ball Color:"))));
+        customizationManager.setPaddleDesign(getText(labelTextFieldMap.get(getLabel("Paddle Design:"))));
+        customizationManager.setBackgroundTheme(getText(labelTextFieldMap.get(getLabel("Background Theme:"))));
 
+        try {
+            int level = Integer.parseInt(getText(labelTextFieldMap.get(getLabel("Difficulty Level:"))));
+            difficultyManager.setLevel(level);
+        } catch (NumberFormatException e) {
+            // Handle invalid input for difficulty level
+            System.out.println("Invalid input for Difficulty Level!");
+        }
     }
 
-    private String getText(String labelText) {
-        // Extracts text from the JLabel and removes the label part
-        for (Component component : getComponents()) {
-            if (component instanceof JLabel && ((JLabel) component).getText().equals(labelText)) {
-                Component nextComponent = getComponent(getComponentZOrder(component) + 1);
-                if (nextComponent instanceof JTextField) {
-                    return ((JTextField) nextComponent).getText();
-                }
+    private JLabel getLabel(String labelText) {
+        for (Map.Entry<JLabel, JTextField> entry : labelTextFieldMap.entrySet()) {
+            if (entry.getKey().getText().equals(labelText)) {
+                return entry.getKey();
             }
         }
-        return "";
+        return null;
+    }
+
+    private String getText(JTextField textField) {
+        return textField != null ? textField.getText() : "";
     }
 }
