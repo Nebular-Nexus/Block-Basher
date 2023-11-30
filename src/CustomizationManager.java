@@ -2,7 +2,7 @@ public class CustomizationManager {
     private String paddleDesign;
     private String ballColor;
     private String backgroundTheme;
-
+    
     public void customizePaddle() {
         // Customize paddle
     }

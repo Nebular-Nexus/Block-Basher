@@ -21,14 +21,14 @@ public class PaddleController {
     public void moveLeft() {
         // Move paddle to the left
         if(this.paddlePosition>0){
-            this.paddlePosition -= 5;
+            this.paddlePosition -= 10;
         }
     }
 
     public void moveRight() {
         // Move paddle to the right
         if(this.paddlePosition<600){
-            this.paddlePosition += 5;
+            this.paddlePosition += 10;
         }
     }
 

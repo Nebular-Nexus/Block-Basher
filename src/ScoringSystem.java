@@ -1,7 +1,6 @@
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 public class ScoringSystem {
     private int score;
@@ -22,9 +21,7 @@ public class ScoringSystem {
     {
         g.setColor(Color.black);
         g.setFont(new Font("serif", Font.BOLD, 25));
-        g.drawString("" + score, 590, 30);
+        g.drawString("Score " + score, 550, 30);
     }
-
-    
 }
 

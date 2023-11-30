@@ -33,6 +33,8 @@ public class InputHandler {
            return "left";
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             return "right";
+        } else if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            return "enter";
         }
         return "none";
     }

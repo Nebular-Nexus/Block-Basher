@@ -1,13 +1,18 @@
 public class DifficultyManager {
-    private int ballSpeed;
-    private int brickDurability;
-    // private int level;
+    private int level;
 
-    public void increaseDifficulty() {
+    public DifficultyManager(int level) {
+        this.level = level;
     }
 
-    public void decreaseDifficulty() {
-        // Decrease game difficulty
+    public int getLevel() {
+        return level;
     }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+
 }
 
