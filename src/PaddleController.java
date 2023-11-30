@@ -11,6 +11,9 @@ public class PaddleController {
     public int getPaddlePosition() {
         return paddlePosition;
     }
+    public int getpaddlewidth(){
+        return paddleWidth;
+    }
 
     public PaddleController(InputConnector inputConnector,int paddleWidth,int paddlePosition,int paddleSpeed) {
         this.inputConnector = inputConnector;
@@ -28,7 +31,7 @@ public class PaddleController {
 
     public void moveRight() {
         // Move paddle to the right
-        if(this.paddlePosition<600){
+        if(this.paddlePosition+(paddleWidth/2)<800){
             this.paddlePosition += this.paddleSpeed;
         }
     }

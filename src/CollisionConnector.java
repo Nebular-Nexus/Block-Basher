@@ -14,7 +14,7 @@ public class CollisionConnector {
 
 
 
-        if (new Rectangle(ballController.getBallPositionX(), ballController.getBallPositionY(), 20, 20).intersects(new Rectangle(paddleController.getPaddlePosition(), 550, 100, 8))) {
+        if (new Rectangle(ballController.getBallPositionX(), ballController.getBallPositionY(), 20, 20).intersects(new Rectangle(paddleController.getPaddlePosition(), 550,paddleController.getpaddlewidth(), 8))) {
             ballController.setBallDirY(-1*ballController.getBallDirY());;
         }
 
