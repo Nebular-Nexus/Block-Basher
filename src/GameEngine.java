@@ -77,15 +77,15 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,10);
-        this.difficulty_speed.put(2,10);
-        this.difficulty_speed.put(3,10);
-        this.difficulty_paddle_length.put(1,2000);
-        this.difficulty_paddle_length.put(2,1500);
-        this.difficulty_paddle_length.put(3,1250);
-        this.difficulty_paddle_speed.put(1,50);
-        this.difficulty_paddle_speed.put(2,50);
-        this.difficulty_paddle_speed.put(3,50);
+        this.difficulty_speed.put(1,1);
+        this.difficulty_speed.put(2,3);
+        this.difficulty_speed.put(3,4);
+        this.difficulty_paddle_length.put(1,200);
+        this.difficulty_paddle_length.put(2,150);
+        this.difficulty_paddle_length.put(3,125);
+        this.difficulty_paddle_speed.put(1,10);
+        this.difficulty_paddle_speed.put(2,20);
+        this.difficulty_paddle_speed.put(3,30);
         this.brickManager = new BrickManager(4,10,this.customizationManager.getBackgroundTheme());
         this.scoringSystem = new ScoringSystem(0);
         this.scoreConnector = new ScoreConnector(this.scoringSystem);
