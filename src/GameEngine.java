@@ -139,9 +139,27 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
             }
         }
     private void showDefeatMessage() {
-        JOptionPane.showMessageDialog(this, "Defeat! Try Again.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
-        // Additional logic if you want to start a new game or do something else
-        
+        Object[] options = {"Restart", "Exit"};
+        int choice = JOptionPane.showOptionDialog(
+                this,
+                "Defeat! Try Again.",
+                "Defeat",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+        if (choice == JOptionPane.YES_OPTION) {
+            // Restart logic, you may want to reset the game state
+            play = false;
+            defeat = false;
+            initializeGame();
+            repaint();
+        } else {
+            // Exit or any other logic you want
+            System.exit(0);
+        }
     }
 
 
