@@ -70,8 +70,8 @@ The game's various components have undergone rigorous testing to ensure function
 
 ## How to Use
 
-1. *Clone the Repository:* git clone <repository_url>
-2. *Compile and Run:* javac Main.java && java Main
+1. *Clone the Repository:* git clone <https://github.com/Nebular-Nexus/Block-Basher.git>
+2. *Compile and Run:* Go to MenuFrame class and press the run option on IntelliJ.
 3. *Navigate Menus:* Use arrow keys and Enter to navigate menus.
 4. *Start Game:* Hit 'Start' to begin playing the game.
 
