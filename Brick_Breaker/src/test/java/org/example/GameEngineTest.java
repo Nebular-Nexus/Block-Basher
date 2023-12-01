@@ -19,7 +19,7 @@ class GameEngineTest {
     }
 
     @Test
-    public void testCheckDefault()
+    public void testCheckDefeat()
     {
         GameEngine gameEngine = new GameEngine(new DifficultyManager(1), new CustomizationManager());
         BallController ballController = new BallController(350, 571, 1, 1, 2, new CollisionConnector(), Color.RED);
