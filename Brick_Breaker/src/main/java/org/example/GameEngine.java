@@ -18,7 +18,6 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private DifficultyManager difficultyManager;
     private UserInterface ui;
     private InputHandler inputHandler;
-    private ErrorHandler errorHandler;
     private CollisionConnector collisionConnector;
     private InputConnector inputConnector;
     private ScoreConnector scoreConnector;
@@ -79,12 +78,12 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,1);
-        this.difficulty_speed.put(2,3);
-        this.difficulty_speed.put(3,4);
-        this.difficulty_paddle_length.put(1,200);
-        this.difficulty_paddle_length.put(2,150);
-        this.difficulty_paddle_length.put(3,125);
+        this.difficulty_speed.put(1,8);
+        this.difficulty_speed.put(2,8);
+        this.difficulty_speed.put(3,8);
+        this.difficulty_paddle_length.put(1,2000);
+        this.difficulty_paddle_length.put(2,2000);
+        this.difficulty_paddle_length.put(3,2050);
         this.difficulty_paddle_speed.put(1,10);
         this.difficulty_paddle_speed.put(2,20);
         this.difficulty_paddle_speed.put(3,30);
@@ -108,7 +107,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         this.paddleController = new PaddleController(this.inputConnector,this.difficulty_paddle_length.get(this.difficultyManager.getLevel()),310,this.difficulty_paddle_speed.get(this.difficultyManager.getLevel()));
 
 
-        this.errorHandler = new ErrorHandler();
+
     }
 
     @Override
@@ -124,7 +123,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     
     // Inside the GameEngine class
 
-private void checkVictory() {
+public void checkVictory() {
     if (brickManager.allBricksHit() && !victory) {
         play = false;
         victoryDelayTimer.start();
@@ -139,7 +138,7 @@ private void checkVictory() {
     }
 }
 
-private void showVictoryMessage() {
+public void showVictoryMessage() {
     Object[] options = {"Next Level", "Exit"};
 
     int choice = JOptionPane.showOptionDialog(
@@ -164,7 +163,7 @@ private void showVictoryMessage() {
     }
 }
 
-private void showGameBeatMessage() {
+public void showGameBeatMessage() {
     Object[] options = {"Restart from Level 1", "Exit"};
 
     int choice = JOptionPane.showOptionDialog(
@@ -190,14 +189,14 @@ private void showGameBeatMessage() {
 }
 
         
-    private void checkDefeat() {
+    public void checkDefeat() {
             if (ballController.GameOver()==1 && !victory) {
                 play = false;
                 victoryDelayTimer.start();
                 defeat = true;
             }
         }
-    private void showDefeatMessage() {
+    public void showDefeatMessage() {
         Object[] options = {"Restart", "Exit"};
         int choice = JOptionPane.showOptionDialog(
                 this,
@@ -245,18 +244,5 @@ private void showGameBeatMessage() {
         this.paddleController.handleInput(e);
         }
     
-        // public static void main(String[] args) {
-        //     SwingUtilities.invokeLater(() -> {
-        //         JFrame obj = new JFrame();
-        //         GameEngine gameEngine = new GameEngine();
-        //         obj.setBounds(10,10,700,600);
-        //         obj.setTitle("Breakout Ball");
-        //         // obj.getContentPane().setBackground(Color.black);
-        //         obj.setResizable(true);
-        //         obj.setVisible(true);
-        //         obj.setLocationRelativeTo(null);
-        //         obj.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //         obj.add(gameEngine);
-        //     });
-        // }
+
 }

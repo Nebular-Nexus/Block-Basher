@@ -3,12 +3,6 @@ package org.example;
 import java.awt.Rectangle;
 
 public class CollisionConnector {
-    // private BrickManager brickManager;
-    // private ScoreConnector scoreConnector;
-    // public CollisionConnector(BrickManager brickManager,ScoreConnector scoreConnector) {
-        // brickManager = brickManager;
-        // scoreConnector = scoreConnector;
-    // }
 
     public CollisionConnector(){}
 
