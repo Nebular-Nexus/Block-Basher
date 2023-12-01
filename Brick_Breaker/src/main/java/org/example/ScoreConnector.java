@@ -1,3 +1,5 @@
+package org.example;
+
 import java.awt.Graphics2D;
 
 public class ScoreConnector {

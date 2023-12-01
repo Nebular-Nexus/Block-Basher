@@ -1,3 +1,5 @@
+package org.example;
+
 public class DifficultyManager {
     private int level;
     private boolean gameBeat;

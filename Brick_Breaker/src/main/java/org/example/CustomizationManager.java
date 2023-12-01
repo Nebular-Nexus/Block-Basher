@@ -1,4 +1,4 @@
-// CustomizationManager.java
+package org.example;// CustomizationManager.java
 
 import java.awt.Color;
 
