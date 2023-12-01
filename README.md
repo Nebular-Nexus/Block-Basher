@@ -65,6 +65,8 @@ The game's various components have undergone rigorous testing to ensure function
 ## Snapshots of the Game
 
 ![StartUp](./Start_Menu.png)
+![StartUp](./BrickGame.png)
+![StartUp](./Settings.png)
 
 ## How to Use
 
