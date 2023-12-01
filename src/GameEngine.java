@@ -77,15 +77,15 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,1);
-        this.difficulty_speed.put(2,3);
-        this.difficulty_speed.put(3,4);
-        this.difficulty_paddle_length.put(1,200);
-        this.difficulty_paddle_length.put(2,150);
-        this.difficulty_paddle_length.put(3,125);
-        this.difficulty_paddle_speed.put(1,10);
-        this.difficulty_paddle_speed.put(2,20);
-        this.difficulty_paddle_speed.put(3,30);
+        this.difficulty_speed.put(1,10);
+        this.difficulty_speed.put(2,10);
+        this.difficulty_speed.put(3,10);
+        this.difficulty_paddle_length.put(1,2000);
+        this.difficulty_paddle_length.put(2,1500);
+        this.difficulty_paddle_length.put(3,1250);
+        this.difficulty_paddle_speed.put(1,50);
+        this.difficulty_paddle_speed.put(2,50);
+        this.difficulty_paddle_speed.put(3,50);
         this.brickManager = new BrickManager(4,10,this.customizationManager.getBackgroundTheme());
         this.scoringSystem = new ScoringSystem(0);
         this.scoreConnector = new ScoreConnector(this.scoringSystem);
@@ -120,17 +120,74 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         repaint();
     }
     
-    private void checkVictory() {
-            if (brickManager.allBricksHit() && !victory) {
-                play = false;
-                victoryDelayTimer.start();
-                victory = true;
-            }
+    // Inside the GameEngine class
+
+private void checkVictory() {
+    if (brickManager.allBricksHit() && !victory) {
+        play = false;
+        victoryDelayTimer.start();
+
+        if (difficultyManager.isGameBeat()) {
+            // Player has beaten the game
+            showGameBeatMessage();
+        } else {
+            // Player cleared a level
+            victory = true;
         }
-    private void showVictoryMessage() {
-        JOptionPane.showMessageDialog(this, "Victory! You've cleared all the bricks.", "Victory", JOptionPane.INFORMATION_MESSAGE);
-        // Additional logic if you want to start a new game or do something else
     }
+}
+
+private void showVictoryMessage() {
+    Object[] options = {"Next Level", "Exit"};
+
+    int choice = JOptionPane.showOptionDialog(
+            this,
+            "Victory! You've cleared all the bricks.",
+            "Victory",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[0]
+    );
+
+    if (choice == JOptionPane.YES_OPTION) {
+        play = false;
+        victory = false;
+        difficultyManager.incrementLevel();
+        initializeGame();
+        repaint();
+    } else {
+        System.exit(0);
+    }
+}
+
+private void showGameBeatMessage() {
+    Object[] options = {"Restart from Level 1", "Exit"};
+
+    int choice = JOptionPane.showOptionDialog(
+            this,
+            "Congratulations! You beat the game!",
+            "Game Beat",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[0]
+    );
+
+    if (choice == JOptionPane.YES_OPTION) {
+        play = false;
+        victory = false;
+        difficultyManager.setLevel(1);
+        initializeGame();
+        repaint();
+    } else {
+        System.exit(0);
+    }
+}
+
+        
     private void checkDefeat() {
             if (ballController.GameOver()==1 && !victory) {
                 play = false;
