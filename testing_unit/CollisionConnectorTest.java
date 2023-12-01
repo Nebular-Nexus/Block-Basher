@@ -29,8 +29,9 @@ public class CollisionConnectorTest {
     @Test
     public void testCheckCollisionsPaddle() {
         // Test collision with paddle
-        ballController.setBallPosition(100, 500); // Set ball position for collision with paddle
-        paddleController.setPaddlePosition(90); // Set paddle position for collision
+        ballController.setBallPositionX(100);
+        ballController.setBallPositionY(0); // Set ball position for collision with paddle
+        paddleController.setpaddlePosition(90); // Set paddle position for collision
 
         collisionConnector.checkCollisions(ballController, brickManager, paddleController, scoreConnector);
 

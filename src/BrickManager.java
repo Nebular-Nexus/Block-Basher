@@ -5,11 +5,15 @@ import java.util.Hashtable;
 import java.util.Random;
 
 public class BrickManager {
+    private Color bgcolor;
+
     private Brick bricks[][];
 
-    public BrickManager(int row, int col) {
+    public BrickManager(int row, int col,Color bgColor) {
+        this.bgcolor = bgColor;
         bricks = new Brick[row][col];
         createBricks(row, col); // Initialize bricks here
+    
     }
 
     public Brick[][] getBricks() {
@@ -42,7 +46,7 @@ public class BrickManager {
                     g.fillRect(brickX, brickY, brick.getX().intValue(), brick.getY().intValue());
 
                     g.setStroke(new BasicStroke(3));
-                    g.setColor(Color.white);
+                    g.setColor(this.bgcolor);
                     g.drawRect(j * brick.getX().intValue() + 80, i * brick.getY().intValue() + 50,
                             brick.getX().intValue(), brick.getY().intValue());
                 } else if (brick.getDurability() == 0) {

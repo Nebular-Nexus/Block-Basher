@@ -86,7 +86,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
         this.difficulty_paddle_speed.put(1,10);
         this.difficulty_paddle_speed.put(2,20);
         this.difficulty_paddle_speed.put(3,30);
-        this.brickManager = new BrickManager(4,10);
+        this.brickManager = new BrickManager(4,10,this.customizationManager.getBackgroundTheme());
         this.scoringSystem = new ScoringSystem(0);
         this.scoreConnector = new ScoreConnector(this.scoringSystem);
         // this.customizationManager = new CustomizationManager();
@@ -141,6 +141,7 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private void showDefeatMessage() {
         JOptionPane.showMessageDialog(this, "Defeat! Try Again.", "Defeat", JOptionPane.INFORMATION_MESSAGE);
         // Additional logic if you want to start a new game or do something else
+        
     }
 
 

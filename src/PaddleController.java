@@ -59,4 +59,11 @@ public class PaddleController {
         g.setColor(Color.black);
         g.fillRect(this.paddlePosition, 550, this.paddleWidth, 8);
     }
+    
+
+    public void setpaddlePosition(int x)
+    {
+        this.paddlePosition = x;
+    }
+      
 }
