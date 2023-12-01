@@ -21,7 +21,7 @@ public class ScoringSystem {
     {
         g.setColor(Color.black);
         g.setFont(new Font("serif", Font.BOLD, 25));
-        g.drawString("Score " + score, 550, 30);
+        g.drawString("Score " + score, 650, 30);
     }
 }
 

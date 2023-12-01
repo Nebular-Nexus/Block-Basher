@@ -38,7 +38,7 @@ public class BallController {
         if (this.getBallPositionX() < 0) {
             this.setBallDirX(-1*this.getBallDirX());
         }
-        if (this.getBallPositionX() > 670) {
+        if (this.getBallPositionX() > 770) {
             this.setBallDirX(-1*this.getBallDirX());
         }
 

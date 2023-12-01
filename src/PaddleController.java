@@ -31,18 +31,12 @@ public class PaddleController {
 
     public void moveRight() {
         // Move paddle to the right
-        if(this.paddlePosition+(paddleWidth/2)<800){
+        if(this.paddlePosition+(paddleWidth/2)<700){
             this.paddlePosition += this.paddleSpeed;
         }
     }
 
     public void handleInput(KeyEvent e) {
-        // Handling input events using InputConnector
-        // if (inputConnector.isLeftKeyPressed(e)) {
-        //     moveLeft();
-        // } else if (inputConnector.isRightKeyPressed(e)) {
-        //     moveRight();
-        // }
 
         if(inputConnector.keyPressed(e).equals("left")){
             moveLeft();
@@ -54,8 +48,6 @@ public class PaddleController {
 
     public void paddleDisplay(Graphics2D g)
     {
-        // System.out.println(this.paddlePosition);
-        // System.out.println(this.paddleWidth);
         g.setColor(Color.black);
         g.fillRect(this.paddlePosition, 550, this.paddleWidth, 8);
     }

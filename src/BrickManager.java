@@ -21,7 +21,7 @@ public class BrickManager {
     }
 
     public void createBricks(Integer x, Integer y) {
-        double bricksWidth = 540 / y;
+        double bricksWidth = 630 / y;
         double bricksHeight = 150 / x;
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -46,7 +46,7 @@ public class BrickManager {
                     g.fillRect(brickX, brickY, brick.getX().intValue(), brick.getY().intValue());
 
                     g.setStroke(new BasicStroke(3));
-                    g.setColor(this.bgcolor);
+                    g.setColor(Color.black);
                     g.drawRect(j * brick.getX().intValue() + 80, i * brick.getY().intValue() + 50,
                             brick.getX().intValue(), brick.getY().intValue());
                 } else if (brick.getDurability() == 0) {
