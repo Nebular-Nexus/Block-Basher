@@ -9,7 +9,7 @@ public class SettingsPanel extends JPanel {
     private CustomizationManager customizationManager;
     private DifficultyManager difficultyManager;
 
-    private Map<JLabel, JTextField> labelTextFieldMap;
+    private Map<JLabel, JComboBox<String>> labelComboBoxMap;
 
     public SettingsPanel(CustomizationManager customizationManager, DifficultyManager difficultyManager, MenuFrame menuFrame) {
         this.customizationManager = customizationManager;
@@ -19,19 +19,19 @@ public class SettingsPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        labelTextFieldMap = new HashMap<>();
+        labelComboBoxMap = new HashMap<>();
 
         // Ball Color
-        addLabelAndTextField("Ball Color:", "BLACK", gbc);
+        addLabelAndComboBox("Ball Color:", new String[]{"BLACK", "RED", "BLUE"}, gbc);
 
         // Paddle Design
-        // addLabelAndTextField("Paddle Design:", customizationManager.getPaddleDesign(), gbc);
+        // addLabelAndComboBox("Paddle Design:", new String[]{"Design1", "Design2", "Design3"}, gbc);
 
         // Background Theme
-        addLabelAndTextField("Background Theme:","WHITE", gbc);
+        addLabelAndComboBox("Background Theme:", new String[]{"WHITE", "GRAY", "BLUE"}, gbc);
 
         // Difficulty Level
-        addLabelAndTextField("Difficulty Level:", String.valueOf(difficultyManager.getLevel()), gbc);
+        addLabelAndComboBox("Difficulty Level:", new String[]{"1", "2", "3"}, gbc);
 
         // Save Button
         gbc.gridx = 0;
@@ -48,32 +48,29 @@ public class SettingsPanel extends JPanel {
         add(saveButton, gbc);
     }
 
-    private void addLabelAndTextField(String labelText, String defaultValue, GridBagConstraints gbc) {
+    private void addLabelAndComboBox(String labelText, String[] options, GridBagConstraints gbc) {
         JLabel label = new JLabel(labelText);
-        JTextField textField = new JTextField(defaultValue, 10);
+        JComboBox<String> comboBox = new JComboBox<>(options);
 
         gbc.gridx = 0;
         gbc.gridy++;
         add(label, gbc);
 
         gbc.gridx = 1;
-        add(textField, gbc);
+        add(comboBox, gbc);
 
-        labelTextFieldMap.put(label, textField);
+        labelComboBoxMap.put(label, comboBox);
     }
 
     private void saveSettings() {
-
-        String ballColorInput = getText(labelTextFieldMap.get(getLabel("Ball Color:")));
-        Color ballColor = parseColor(ballColorInput);
+        Color ballColor = parseColor((String) labelComboBoxMap.get(getLabel("Ball Color:")).getSelectedItem());
         customizationManager.setBallColor(ballColor);
-        String backgroundColorInput =getText(labelTextFieldMap.get(getLabel("Background Theme:")));
-        Color backGroundColor = parseColor(backgroundColorInput);
-        // customizationManager.setPaddleDesign(getText(labelTextFieldMap.get(getLabel("Paddle Design:"))));
+
+        Color backGroundColor = parseColor((String) labelComboBoxMap.get(getLabel("Background Theme:")).getSelectedItem());
         customizationManager.setBackgroundTheme(backGroundColor);
-        System.out.println(getText(labelTextFieldMap.get(getLabel("Ball Color:"))));
+
         try {
-            int level = Integer.parseInt(getText(labelTextFieldMap.get(getLabel("Difficulty Level:"))));
+            int level = Integer.parseInt((String) labelComboBoxMap.get(getLabel("Difficulty Level:")).getSelectedItem());
             difficultyManager.setLevel(level);
         } catch (NumberFormatException e) {
             // Handle invalid input for difficulty level
@@ -82,16 +79,12 @@ public class SettingsPanel extends JPanel {
     }
 
     private JLabel getLabel(String labelText) {
-        for (Map.Entry<JLabel, JTextField> entry : labelTextFieldMap.entrySet()) {
+        for (Map.Entry<JLabel, JComboBox<String>> entry : labelComboBoxMap.entrySet()) {
             if (entry.getKey().getText().equals(labelText)) {
                 return entry.getKey();
             }
         }
         return null;
-    }
-
-    private String getText(JTextField textField) {
-        return textField != null ? textField.getText() : "";
     }
 
     private Color parseColor(String colorInput) {
@@ -109,6 +102,4 @@ public class SettingsPanel extends JPanel {
             }
         }
     }
-
-
 }
