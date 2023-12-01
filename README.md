@@ -64,7 +64,7 @@ The game's various components have undergone rigorous testing to ensure function
 
 ## Snapshots of the Game
 
-![StartUp](image_link)
+![StartUp](./Start_Menu.png)
 
 ## How to Use
 
