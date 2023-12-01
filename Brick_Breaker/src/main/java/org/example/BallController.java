@@ -37,6 +37,10 @@ public class BallController {
         // System.out.println(this.getBallPositionX());
 
         //checks if the ball hits the side walls
+        checkCollisionsWall();
+    }
+
+    public void checkCollisionsWall(){
         if (this.getBallPositionX() < 0) {
             this.setBallDirX(-1*this.getBallDirX());
         }
@@ -48,12 +52,13 @@ public class BallController {
         if (this.getBallPositionY() < 0) {
             this.setBallDirY(-1*this.getBallDirY());
         }
-        
+
         if(this.getBallPositionY()>570)
         {
             gameover=1;
         }
         // Move the ball
+
     }
     public int GameOver()
     {

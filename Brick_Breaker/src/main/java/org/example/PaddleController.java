@@ -43,7 +43,7 @@ public class PaddleController {
         if(inputConnector.keyPressed(e).equals("left")){
             moveLeft();
         }
-        else{
+        else if(inputConnector.keyPressed(e).equals("right")){
             moveRight();
         }
     }

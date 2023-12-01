@@ -1,3 +1,4 @@
+
 package org.example;
 
 import static org.junit.Assert.assertEquals;
@@ -8,6 +9,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.KeyEvent;
@@ -32,4 +34,13 @@ class PaddleControllerTest {
         paddleController.handleInput(mockedKeyEvent);
         Assertions.assertEquals(95, paddleController.getPaddlePosition());
     }
+
+//    @Test
+//    @DisplayName("ActionListener test")
+//    void testActionListener(){
+//        HelpWindow helpWindow = new HelpWindow("menu");
+//        helpWindow.setHelpWindow();
+//
+//        assertDoesNotThrow(() -> helpWindow.getReturnButton().doClick());
+//    }
 }

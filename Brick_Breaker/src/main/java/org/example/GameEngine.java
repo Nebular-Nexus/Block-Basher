@@ -29,10 +29,28 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     private Timer timer;
     private int ballposX=350;
     private int ballposY=500;
+
+    public BallController getBallController() {
+        return ballController;
+    }
+
+    public void setBallController(BallController ballController) {
+        this.ballController = ballController;
+    }
+
     private int ballXdir=1;
     private int ballYdir=2;
     private boolean play = false;
     private boolean victory = false;
+
+    public boolean isDefeat() {
+        return defeat;
+    }
+
+    public void setDefeat(boolean defeat) {
+        this.defeat = defeat;
+    }
+
     private boolean defeat = false;
     private Timer victoryDelayTimer;
 
@@ -78,12 +96,12 @@ public class GameEngine extends JPanel implements KeyListener, ActionListener{
     public void initializeGame() {
     
 
-        this.difficulty_speed.put(1,8);
-        this.difficulty_speed.put(2,8);
-        this.difficulty_speed.put(3,8);
-        this.difficulty_paddle_length.put(1,2000);
-        this.difficulty_paddle_length.put(2,2000);
-        this.difficulty_paddle_length.put(3,2050);
+        this.difficulty_speed.put(1,1);
+        this.difficulty_speed.put(2,2);
+        this.difficulty_speed.put(3,3);
+        this.difficulty_paddle_length.put(1,200);
+        this.difficulty_paddle_length.put(2,175);
+        this.difficulty_paddle_length.put(3,150);
         this.difficulty_paddle_speed.put(1,10);
         this.difficulty_paddle_speed.put(2,20);
         this.difficulty_paddle_speed.put(3,30);
